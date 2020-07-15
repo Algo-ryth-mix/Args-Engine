@@ -18,8 +18,14 @@ jobs:
        tar xvz premake5 | \
        xargs -I"{}" sudo mv {} /usr/bin
        
+    - name: get compiledb
+      run: pip install compiledb
+    
     - name: generate Makefiles
       run: premake5 --file=args/premake5.lua gmake
 
     - name: make
       run: cd args && make CXX=clang++-9 config=debug64 all
+
+    - name: combiledb
+      run: cd args && compiledb make CXX=clang++-9 config=debug64 all
