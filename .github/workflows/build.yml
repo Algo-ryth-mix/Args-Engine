@@ -28,4 +28,4 @@ jobs:
       run: cd args && make CXX=clang++-9 config=debug64 all
 
     - name: combiledb
-      run: cd args && compiledb make CXX=clang++-9 config=debug64 all
+      run: cd args && python -m compiledb make CXX=clang++-9 config=debug64 all
