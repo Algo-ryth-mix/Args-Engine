@@ -11,12 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="delete_this.cpp" />
+    <ClCompile Include="context\contexthelper.cpp" />
+    <ClCompile Include="context\detail\glad\glad.c" />
+    <ClCompile Include="input\inputsystem.cpp" />
+    <ClCompile Include="window\windowsystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\core\core.vcxproj">
-      <Project>{63d0d607-e99e-40b0-9b27-6e2430b57f7e}</Project>
-    </ProjectReference>
+    <ClInclude Include="application.hpp" />
+    <ClInclude Include="context\contexthelper.hpp" />
+    <ClInclude Include="input\inputmap.hpp" />
+    <ClInclude Include="events\windowinputevents.hpp" />
+    <ClInclude Include="context\detail\glad\glad.h" />
+    <ClInclude Include="context\detail\KHR\khrplatform.h" />
+    <ClInclude Include="events\inputevents.hpp" />
+    <ClInclude Include="events\windowevents.hpp" />
+    <ClInclude Include="input\inputsystem.hpp" />
+    <ClInclude Include="module\applicationmodule.hpp" />
+    <ClInclude Include="window\window.hpp" />
+    <ClInclude Include="window\windowsystem.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -57,6 +69,7 @@
     <IntDir>$(SolutionDir)temp\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>args-$(ProjectName)</TargetName>
     <IncludePath>$(SolutionDir)args;$(SolutionDir)deps\include;$(IncludePath)</IncludePath>
+    <ClangTidyChecks>-c++17-extensions-*</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -64,19 +77,26 @@
     <IntDir>$(SolutionDir)temp\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>args-$(ProjectName)</TargetName>
     <IncludePath>$(SolutionDir)args;$(SolutionDir)deps\include;$(IncludePath)</IncludePath>
+    <ClangTidyChecks>-c++17-extensions-*</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARGS_WINDOWS;ARGS_INTERNAL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARGS_INTERNAL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>args-core.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(TargetName).lib" "$(SolutionDir)deps\lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -84,16 +104,22 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ARGS_WINDOWS;ARGS_INTERNAL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARGS_INTERNAL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)deps\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>args-core.lib;glfw3.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(TargetName).lib" "$(SolutionDir)deps\lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

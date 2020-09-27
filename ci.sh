@@ -1,2 +1,6 @@
-chmod +x docs/ci-build-docs.sh
-./docs/ci-build-docs.sh
+#!/bin/sh
+
+cd docs
+
+chmod +x ci-build-docs.sh
+./ci-build-docs.sh

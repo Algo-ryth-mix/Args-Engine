@@ -1,8 +1,12 @@
-#include <iostream>
 #include <core/core.hpp>
+#include <editor/editor.hpp>
 
-void __cdecl reportModules(args::core::Engine* engine)
+void ARGS_CCONV reportEditorModules(args::editor::Editor* editor)
 {
-	std::cout << "Hello Args!" << std::endl;
-	_getwch();
+
+}
+
+void ARGS_CCONV reportModules(args::core::Engine* engine)
+{
+	args::log::info("Hello Args!");
 }
