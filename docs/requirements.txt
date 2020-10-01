@@ -1,4 +1,4 @@
 recommonmark
 exhale
-breathe
+git+git://github.com/Algo-ryth-mix/breathe@master#egg=breathe
 sphinx-nameko-theme
